@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Akuma</title>
+  <style>
+    body {
+      line-height: 1.6;
+      color: #fff;
+      background: #000;
+      font-size: 18px;
+      font-weight: 400;
+      font-family: "-apple-system", "BlinkMacSystemFont", "Roboto", "Helvetica Neue", sans-serif !important;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body.stop {
+      overflow: hidden;
+    }
+
+    #page {
+      position: relative;
+      transition: 1s all ease-in-out;
+    }
+
+    #page.menuopen {
+      opacity: .6;
+      filter: blur(20px);
+      transform: scale(1.2);
+    }
+
+    section {
+      display: flex;
+      min-height: 100vh;
+      padding: 50px;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background-size: cover;
+      color: #fff;
+      position: relative;
+    }
+
+    .cadre {
+      margin: 0px 50px 0px 50px;
+      padding: 20px;
+      background: rgba(34, 34, 34, 0.4);
+      border-radius: 10px;
+      backdrop-filter: blur(5px);
+      color: white;
+    }
+    .cadre ul {
+      list-style-type: none;
+    }
+
+    section h1{
+      margin-bottom: 150px;
+    }
+
+
+    section:after {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      background: #000;
+      opacity: .5;
+      height: 100%;
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 120px;
+      margin: 0;
+      z-index: 2;
+      position: relative;
+    }
+
+    header {
+      z-index: 99999;
+      position: relative;
+    }
+
+    #logo-container {
+      position: fixed;
+      top: 30px;
+      left: 0;
+      right: 0;
+      width: 100px;
+      height: auto;
+      margin: 0 auto;
+      opacity: 1;
+      transition: .3s all cubic-bezier(0.075, 0.82, 0.165, 1) .6s;
+    }
+
+    #logo {
+      width: 100%;
+      height: auto;
+    }
+
+    nav {
+      display: flex;
+      height: 100px;
+      justify-content: center;
+      align-items: center;
+      padding: 0 20px;
+      position: fixed;
+      left: 0;
+      right: 0;
+      width: 500px;
+      margin: 0 auto;
+      top: 120px;
+      background-color: rgba(255, 255, 255, .05);
+      border-radius: 200px;
+      z-index: 9;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, .06);
+      transition: 1s all cubic-bezier(0.075, 0.82, 0.165, 1) .2s;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      display: block;
+      padding: 10px 20px;
+      line-height: 1;
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: lowercase;
+      transition: .3s all cubic-bezier(0.075, 0.82, 0.165, 1) .6s;
+    }
+
+    nav button {
+      -webkit-appearance: none;
+      background: rgba(0, 0, 0, .3);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, .1);
+      position: absolute;
+      z-index: 99;
+      left: 0;
+      margin: auto;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      width: 60px;
+      height: 60px;
+      border-radius: 100%;
+      outline: 0;
+      border: 0;
+      cursor: pointer;
+      transition: .3s all cubic-bezier(0.075, 0.82, 0.165, 1) 0.2s;
+      transform: scale(0);
+    }
+
+    nav button span {
+      width: 40%;
+      background: #fff;
+      height: 2px;
+      display: block;
+      margin: 5px auto;
+      transform: scalex(0);
+      transition: .6s transform cubic-bezier(0.075, 0.82, 0.165, 1) 0s, .3s margin ease-in 0s;
+    }
+
+    nav button:hover {
+      border-color: rgba(255, 255, 255, .5);
+    }
+
+    nav button:hover span {
+      margin: 10px auto;
+    }
+
+    header.sticky #logo {
+      top: 0;
+      transform: scale(.8);
+      opacity: 0;
+      transition-delay: 0.5s;
+    }
+
+    header.sticky nav {
+      top: 20px;
+      padding: 0;
+      width: 90px;
+      height: 90px;
+      transition-delay: 0.5s;
+    }
+
+    header.sticky nav button {
+      transform: scale(1);
+      transition-delay: 0.6s;
+    }
+
+    header.sticky nav button span {
+      transform: scalex(1);
+      transition: .6s transform cubic-bezier(0.075, 0.82, 0.165, 1) .8s, .3s margin ease-in 0s;
+    }
+
+    header.sticky nav a {
+      padding: 0;
+      opacity: 0;
+      letter-spacing: 0px;
+      transform: scale(0.3);
+      transition-delay: 0.2s;
+    }
+  </style>
+</head>
+<body>
+<header id="myHeader" class="">
+  <div id="logo-container">
+    <img src="https://i.ibb.co/5jXHQRv/7052197-removebg-preview.png" alt="7052197-removebg-preview" id="logo">
+  </div>
+  <nav>
+    <a href="#presentation">Présentation</a>
+    <a href="#membres">Membres</a>
+    <a href="#combat">Combat</a>
+    <button id="openmenu">
+      <span></span>
+      <span></span>
+    </button>
+  </nav>
+</header>
+<div id="page" class="">
+  <section id="presentation" style="background-image:url(https://cdn.awwni.me/1dl1w.jpg)">
+    <h1>Présentation</h1>
+    <div class="cadre">
+      L'escouade Akuma est une unité d'élite formée pour repousser les limites de leur entraînement et lutter contre les forces démoniaques. Leur mission principale est de s'entraider, renforçant ainsi leur cohésion, tout en affrontant sans relâche les démons qui menacent l'humanité. Au sein de cette unité, de redoutables techniques de combat sont développées, de nouvelles stratégies innovantes sont constamment mises au point, et des liens profonds d'amitié et de confiance se tissent entre ses membres. Ensemble, ils incarnent la dernière ligne de défense contre les ténèbres, prêts à sacrifier tout pour protéger l'humanité de l'horreur démoniaque.
+    </div>
+  </section>
+  <section id="membres" style="background-image:url(https://i.imgur.com/2v8gfP2.png)">
+    <h1>Membres</h1>
+    <div class="cadre">
+      <ul>
+          <li>
+            L'escouade <span style="color: red;">Akuma</span> est composée de six membres, sous le commandement de la puissante <span style="color: pink;">Ume Kanroji, Tsuchinoe de l'Amour</span>. Chacun de nos guerriers est un pilier inébranlable de la justice, prêt à se sacrifier pour protéger l'humanité des démons qui menacent notre monde. Voici les noms et les pouvoirs de nos intrépides combattants :
+          </li>
+          <li>
+            <span style="color: deepskyblue;">Ero Miyama, Tsuchinoto de l'Eau</span>.
+          </li>
+          <li>
+            <span style="color: yellow;">Yajirobe Zenkai, Kanoto de la Foudre</span>.
+          </li>
+          <li>
+            <span style="color: deepskyblue;">Boguchi Oto, Tsuchinoto de l'Eau</span>.
+          </li>
+          <li>
+            <span style="color: pink;">Kalli Kanroji, Kanoe de l'Amour</span>.
+          </li>
+          <li>
+            Ensemble, nous formons une équipe redoutable, unie par un lien indéfectible et prête à affronter les démons pour sauver notre monde.
+          </li>
+      </ul>
+    </div>
+  </section>
+  <section id="combat" style="background-image:url(https://i.imgur.com/zFZvKPA.png)">
+    <h1>Combat</h1>
+    <div class="cadre">
+
+    </div>
+  </section>
+</div>
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    var header = document.getElementById('myHeader');
+    var page = document.getElementById('page');
+    var openMenuButton = document.getElementById('openmenu');
+
+    window.addEventListener('scroll', function () {
+      page.classList.remove('menuopen');
+      if (window.scrollY >= 100) {
+        header.classList.add('sticky');
+      } else {
+        header.classList.remove('sticky');
+      }
+    });
+
+    openMenuButton.addEventListener('click', function () {
+      header.classList.remove('sticky');
+      page.classList.add('menuopen');
+    });
+
+    var links = document.querySelectorAll('a[href^="#"]');
+
+    links.forEach(function (link) {
+      link.addEventListener('click', function (event) {
+        event.preventDefault();
+        var targetId = this.getAttribute('href');
+        var targetElement = document.querySelector(targetId);
+
+        if (targetElement) {
+          targetElement.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>
